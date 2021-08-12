@@ -699,6 +699,7 @@ progress {
     margin-top: calc(var(--bs-gutter-y) * -1);
     margin-right: calc(var(--bs-gutter-x) * -.5);
     margin-left: calc(var(--bs-gutter-x) * -.5);
+    padding-bottom: 20px;
 }
 
     .row > * {
@@ -708,6 +709,7 @@ progress {
         max-width: 100%;
         padding-right: calc(var(--bs-gutter-x) * .5);
         padding-left: calc(var(--bs-gutter-x) * .5);
+        padding-bottom: calc(var(--bs-gutter-x) * .5);
         margin-top: var(--bs-gutter-y);
     }
 
@@ -810,6 +812,7 @@ progress {
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     width: 66.666667%;
+    padding-block:20px; 
 }
 
 .col-9 {

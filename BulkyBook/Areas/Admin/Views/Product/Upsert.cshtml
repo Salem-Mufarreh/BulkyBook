@@ -1,0 +1,183 @@
+﻿@model BulkyBook.Models.ViewModels.ProductVm
+@{
+    ViewData["Title"] = "Upsert";
+    var title = "Create Product";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.product.Id != 0)
+        {
+            title = "Edit Product";
+            <input type="hidden" asp-for="product.Id" />
+        }
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.Title"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <input asp-for="product.Title" class="form-control" />
+                    <span asp-validation-for="product.Title" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row"  style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.ISBN"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <input asp-for="product.ISBN" class="form-control" />
+                    <span asp-validation-for="product.ISBN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.Author"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <input asp-for="product.Author" class="form-control" />
+                    <span asp-validation-for="product.Author" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.Description"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <textarea asp-for="product.Description" class="form-control"></textarea>
+
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.ListPrice"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <input asp-for="product.ListPrice" class="form-control" />
+                    <span asp-validation-for="product.ListPrice" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.Price"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <input asp-for="product.Price" class="form-control" />
+                    <span asp-validation-for="product.Price" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.Price50"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <input asp-for="product.Price50" class="form-control" />
+                    <span asp-validation-for="product.Price50" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    <label asp-for="product.price100"></label>
+                </div>
+                <br />
+                <div class="col-8">
+                    <input asp-for="product.price100" class="form-control" />
+                    <span asp-validation-for="product.price100" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    Category
+                </div>
+                <br />
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.product.CategoryId, Model.CategoryList, "-Select a Category", new { @class = "form-control" })
+                    <span asp-validation-for="product.CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    Cover Type
+                </div>
+                <br />
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.product.CoverTypeId, Model.CoverTypeList, "-Select a Cover Type", new { @class = "form-control" })
+                    <span asp-validation-for="product.CoverTypeId" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-4">
+                    Image
+                </div>
+                <br />
+                <div class="col-8">
+                    <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                </div>
+            </div>
+            <br />
+            <div class="form-group row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                <div class="col-8 offset-4">
+                    @if (Model.product.Id != 0)
+                    {
+                        <partial name="_EditAndBackToListButtons" model="Model.product.Id" />
+
+                    }
+                    else
+                    {
+                        <div class="row" style=" padding-bottom: calc(var(--bs-gutter-x) * .5);">
+                            <div class="col">
+                                <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Create</button>
+                            </div>
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+                            </div>
+                        </div>
+
+
+
+                    }
+                </div>
+            </div>
+        </div>
+        @if(Model.product.Id != 0)
+            {
+                <div class="col-3 offset-1 pt-4">
+                    <img src="@Model.product.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                </div>
+            }
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.tiny.cloud/1/w9ei6nm24egocr9zn1pnngzclyajely2i9ex16rez20urdwk/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'lists ',
+            menubar: 'file edit format'
+            
+        });
+
+        function validateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal("Error", "Please Select an Image", "error");
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+}

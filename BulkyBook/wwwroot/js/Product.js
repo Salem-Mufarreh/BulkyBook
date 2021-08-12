@@ -6,14 +6,14 @@ $(document).ready(function () {
 function loadDataTables() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url":"/Admin/Product/GetAll"
+            "url": "/Admin/Product/GetAll"
         },
         "columns": [
             { "data": "title", "width": "16%" },
             { "data": "isbn", "width": "16%" },
             { "data": "price", "width": "16%" },
             { "data": "author", "width": "16%" },
-            { "data": "category.Name", "width": "16%" },
+            { "data": "category.name", "width": "16%" },
             {
                 "data": "id", "render": function (data) {
                     return ` <div class="text-center">
