@@ -122,7 +122,7 @@ namespace BulkyBook.Areas.Identity.Pages.Account
                     City = Input.City,
                     State = Input.State,
                     PostalCode = Input.PostalCode,
-                    Name = Input.PhoneNumber,
+                    Name = Input.Name,
                     PhoneNumber = Input.PhoneNumber,
                     Role = Input.Role
                 };
