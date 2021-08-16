@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +12,25 @@ namespace BulkyBook.Utility
 {
     public class EmailSender : IEmailSender
     {
+        private readonly EmailOptions emailOptions;
+        public EmailSender(IOptions<EmailOptions> options)
+        {
+            emailOptions = options.Value;
+        }
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            throw new NotImplementedException();
+            return Execute(emailOptions.SendGridKey, subject, htmlMessage, email);
+        }
+
+        private Task Execute(string sendGridKey, string subject, string message, string email)
+        {
+            var client = new SendGridClient("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");
+            var from = new EmailAddress("salemmuf9@gmail.com", "BulkyBooks");
+            var to = new EmailAddress(email,"End User");
+            //var plainTextContent = "and easy to do anywhere, even with C#";
+            //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject,"", message);
+            return  client.SendEmailAsync(msg);
         }
     }
 }

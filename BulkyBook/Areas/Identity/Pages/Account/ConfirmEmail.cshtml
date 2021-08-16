@@ -5,3 +5,23 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+
+
+@section Scripts{ 
+
+<script>
+    $(document).ready(function () {
+        confirm();
+    });
+    function confirm() {
+        swal({
+            title: "Email Configuration Successful",
+            text: "Your Email Has Been verified",
+            icon: "success",
+            buttons: true,
+            dangerMode: false
+        });
+    }
+</script>
+}
+

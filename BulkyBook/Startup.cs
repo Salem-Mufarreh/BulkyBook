@@ -41,6 +41,7 @@ namespace BulkyBook
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
             services.AddRazorPages();
             services.ConfigureApplicationCookie(options =>
             {
