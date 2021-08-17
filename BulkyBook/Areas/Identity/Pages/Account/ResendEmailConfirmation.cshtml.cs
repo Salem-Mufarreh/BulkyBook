@@ -49,7 +49,7 @@ namespace BulkyBook.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                ModelState.AddModelError(string.Empty, "User Account Doesn't Exist! ");
                 return Page();
             }
 
