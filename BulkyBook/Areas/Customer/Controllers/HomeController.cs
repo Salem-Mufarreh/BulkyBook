@@ -34,7 +34,7 @@ namespace BulkyBook.Areas.Customer.Controllers
             if(claim != null)
             {
                 var count = _unitOfWork.ShoppingCart.GetAll(C => C.ApplicationUserId == claim.Value).ToList().Count();
-                HttpContext.Session.SetInt32(SD.ssShopingCart, count);
+                HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
             }
             return View(productList);
         }
@@ -83,7 +83,7 @@ namespace BulkyBook.Areas.Customer.Controllers
 
                 var count = _unitOfWork.ShoppingCart.GetAll(C => C.ApplicationUserId == shoppingCart.ApplicationUserId).ToList().Count();
                 //HttpContext.Session.SetObject(SD.ssShopingCart,shoppingCart);
-                HttpContext.Session.SetInt32(SD.ssShopingCart, count);
+                HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
                 return RedirectToAction("Index");
             }
             else

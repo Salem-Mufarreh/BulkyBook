@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BulkyBook.Models
 {
-  
+
     public class ShoppingCart
     {
         public ShoppingCart()
@@ -26,10 +26,10 @@ namespace BulkyBook.Models
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
 
-        [Range(1,1000,ErrorMessage ="Please Enter A Value Between 1 ,1000")]
+        [Range(1, 1000, ErrorMessage = "Please Enter A Value Between 1 ,1000")]
         public int Count { get; set; }
         [NotMapped]
         public double Price { get; set; }
     }
-   
+
 }

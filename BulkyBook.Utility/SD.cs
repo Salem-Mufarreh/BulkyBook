@@ -18,21 +18,24 @@ namespace BulkyBook.Utility
         public const string Role_User_Comp = "Company Customer";
         public const string Role_Admin = "Admin";
         public const string Role_Employee = "Employee";
-        public const string ssShopingCart = "Shoping Cart Session";
+        public const string ssShoppingCart = "Shopping Cart Session";
 
-        public static double GetPriceBasedOnQuantity(int quantity, double price, double price50, double price100)
+        public static double GetPriceBasedOnQuantity(double quantity, double price, double price50, double price100)
         {
-            if(quantity < 50)
+            if (quantity < 50)
             {
                 return price;
             }
-            if(quantity > 50 && quantity < 100)
-            {
-                return price50;
-            }
             else
             {
-                return price100;
+                if (quantity < 100)
+                {
+                    return price50;
+                }
+                else
+                {
+                    return price100;
+                }
             }
         }
         public static string ConvertToRawHtml(string source)
