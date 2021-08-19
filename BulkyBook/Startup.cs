@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,7 @@ namespace BulkyBook
                 options.Cookie.IsEssential = true;
 
             });
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
         }
 
@@ -85,7 +87,7 @@ namespace BulkyBook
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
             app.UseRouting();
             app.UseSession();
             app.UseAuthentication();
