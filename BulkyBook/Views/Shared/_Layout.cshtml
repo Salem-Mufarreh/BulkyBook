@@ -30,6 +30,10 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a>
+                        </li>
+
                         @if (User.IsInRole(SD.Role_Admin))
                         {
                             <li class="nav-item dropdown">
@@ -45,8 +49,9 @@
                                     <a class="dropdown-item" href="#">Something else here</a>
                                 </div>
                             </li>
-                         }
-                         @if(User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin)) { 
+                        }
+                        @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
+                        {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     User / Company
@@ -56,34 +61,36 @@
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="index">Company</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="index">User's</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+
                                 </div>
                             </li>
-                          }
-                         @if(HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart)!= null)
-                        {
-                             <li style="color:white;">
-                                 <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
-                                     @{ 
-                                         var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart);
+                        }
 
-                                     }
-                                     <i class="fas fa-shopping-cart"></i>&nbsp;(@count)
-                                 </a>
-                             </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart) != null)
+                        {
+                            <li style="color:white;">
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart);
+
+                                    }
+                                    <i class="fas fa-shopping-cart"></i>&nbsp;(@count)
+                                </a>
+                            </li>
 
                         }
                         else
                         {
-                    <li style="color:white;">
-                        <a href="#" class="nav-link">
-                            @*@{
-                                var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShopingCart);
 
-                            }*@
-                            <i class="fas fa-shopping-cart"></i>&nbsp;(0)
-                        </a>
-                    </li>
+                            <li style="color:white;">
+                                <a href="#" class="nav-link">
+                                    @*@{
+                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShopingCart);
+
+                    }*@
+                                    <i class="fas fa-shopping-cart"></i>&nbsp;(0)
+                                </a>
+                            </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />
