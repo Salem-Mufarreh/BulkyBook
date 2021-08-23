@@ -20,18 +20,18 @@ namespace BulkyBook.Utility
         public const string Role_Employee = "Employee";
         public const string ssShoppingCart = "Shopping Cart Session";
 
-        public const string Payment_Pending = "Pending";
-        public const string Payment_Approved = "Approved";
-        public const string Payment_Delayed = "ApprovedForDelayedPayment";
-        public const string Payment_Rejected = "Rejected";
+        public const string StatusPending = "Pending";
+        public const string StatusApproved = "Approved";
+        public const string StatusInProcess = "Processing";
+        public const string StatusShipped = "Shipped";
+        public const string StatusCancelled = "Cancelled";
+        public const string StatusRefunded = "Refunded";
 
-        public const string Status_Pending = "Pending";
-        public const string Status_Approved = "Approved";
-        public const string Status_InProcess = "Processing";
-        public const string Status_Shipped = "Shipped";
-        public const string Status_Cancelled = "Cancelled";
-        public const string Status_Refunded = "Refunded";
-        
+        public const string PaymentStatusPending = "Pending";
+        public const string PaymentStatusApproved = "Approved";
+        public const string PaymentStatusDelayedPayment = "ApprovedForDelayedPayment";
+        public const string PaymentStatusRejected = "Rejected";
+
         public static double GetPriceBasedOnQuantity(double quantity, double price, double price50, double price100)
         {
             if (quantity < 50)
