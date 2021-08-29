@@ -1,5 +1,9 @@
 ﻿@model BulkyBook.Models.ViewModels.OrderDetailsVM
 @using BulkyBook.Utility
+@using Microsoft.Extensions.Options
+
+@inject IOptions<BulkyBook.Utility.StripeSettings> Stripe
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -122,9 +126,9 @@
                             <div class="row my-1">
                                 <div class="col-3">Order Date</div>
                                 <div class="col-9">
-                                   
-                                        <input readonly type="text" class="form-control" value="@Model.OrderHeader.OrderDate.ToShortDateString()" />
-                                    
+
+                                    <input readonly type="text" class="form-control" value="@Model.OrderHeader.OrderDate.ToShortDateString()" />
+
                                 </div>
                             </div>
                             <div class="row my-1">
@@ -156,31 +160,31 @@
                             <div class="row my-1">
                                 <div class="col-3">Shipping Date</div>
                                 <div class="col-9">
-                                  
-                                        <input readonly type="text" class="form-control" id="shippingDate" value="@Model.OrderHeader.ShippingDate.ToShortDateString()" />
-                                    
+
+                                    <input readonly type="text" class="form-control" id="shippingDate" value="@Model.OrderHeader.ShippingDate.ToShortDateString()" />
+
                                 </div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-3">Transaction ID</div>
                                 <div class="col-9">
-                                   
-                                        <input readonly type="text" class="form-control" id="transactionId" asp-for="OrderHeader.TransactionId" />
-                                    
+
+                                    <input readonly type="text" class="form-control" id="transactionId" asp-for="OrderHeader.TransactionId" />
+
                                 </div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-3">Payment Due Date</div>
                                 <div class="col-9">
-                                    
-                                        <input readonly type="text" class="form-control" id="paymentDue" value="@Model.OrderHeader.PaymentDueDate.ToShortDateString()" />
-                                    
+
+                                    <input readonly type="text" class="form-control" id="paymentDue" value="@Model.OrderHeader.PaymentDueDate.ToShortDateString()" />
+
                                 </div>
                                 <div class="col-3">Payment Date</div>
                                 <div class="col-9">
-                                   
-                                        <input readonly type="text" class="form-control" id="paymentDate" value="@Model.OrderHeader.PaymentDate.ToShortDateString()" />
-                                    
+
+                                    <input readonly type="text" class="form-control" id="paymentDate" value="@Model.OrderHeader.PaymentDate.ToShortDateString()" />
+
                                 </div>
                             </div>
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
@@ -241,7 +245,7 @@
                                     }
                                     @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
                                     {
-                                        <input type="submit" value="Ship Order"  onclick=" return ValidateInput()" class="btn btn-primary form-control" formaction="/Admin/Order/ShipOrder" formmethod="post" />
+                                        <input type="submit" value="Ship Order" onclick=" return ValidateInput()" class="btn btn-primary form-control" formaction="/Admin/Order/ShipOrder" formmethod="post" />
 
                                     }
                                 </div>
@@ -256,6 +260,27 @@
                                 <a asp-area="Admin" asp-controller="Order" asp-action="CancelOrder" asp-route-id="@Model.OrderHeader.Id" class="btn btn-danger form-control btn-sm" style="margin-top:10px;">Cancel Order</a>
 
                             }
+                            @{
+                                var OrderTotalForStripe = Model.OrderHeader.OrderTotal * 100;
+                            }
+
+                            @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment && Model.OrderHeader.OrderStatus == SD.StatusShipped)
+                            {
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="@Stripe.Value.PublishableKey"
+                                        data-amount="@OrderTotalForStripe"
+                                        data-name="Bulky Book"
+                                        data-label="Place Order"
+                                        data-description="Get Books, For Less"
+                                        data-locale="auto"
+                                        data-allow-remember-me="false"
+                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+                                </script>
+                                <script>
+                                    document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                </script>
+                                <button type="submit" value="Place Order" class="btn btn-success form-control">Pay Now</button>
+                            }
                         </div>
 
                     </div>
@@ -267,8 +292,7 @@
 
 @section Scripts{
     <script>
-        function ValidateInput()
-        {
+        function ValidateInput() {
             var tracking = document.getElementById("trackingNumber").value;
             var carrier = document.getElementById("carrier").value;
             if (tracking.toString() == '') {
@@ -290,7 +314,7 @@
             if (shipping.value == "01/01/0001") {
                 shipping.value = "";
             }
-            
+
             var paymentDate = document.getElementById("paymentDate");
             if (paymentDate.value == "01/01/0001") {
                 paymentDate.value = "";
