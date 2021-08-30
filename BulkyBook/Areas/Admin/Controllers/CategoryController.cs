@@ -23,7 +23,7 @@ namespace BulkyBook.Areas.Admin.Controllers
         {
             return View();
         }
-        public IActionResult Upsert(int? id)
+        public async Task<IActionResult> Upsert(int? id)
         {
             Category category = new Category();
             if(id == null)
@@ -31,7 +31,7 @@ namespace BulkyBook.Areas.Admin.Controllers
              
                 return View(category);
             }
-            category = _unitOfWork.Category.Get(id.GetValueOrDefault());
+            category = await _unitOfWork.Category.GetAsync(id.GetValueOrDefault());
             if(category == null)
             {
                 return NotFound();
@@ -40,41 +40,41 @@ namespace BulkyBook.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Category category)
+        public async Task<IActionResult> Upsert(Category category)
         {
             if (ModelState.IsValid)
             {
                 if(category.Id == 0)
                 {
-                    _unitOfWork.Category.Add(category);
+                    await _unitOfWork.Category.AddAsync(category);
                     
                 }
                 else
                 {
-                    _unitOfWork.Category.Update(category);
+                     _unitOfWork.Category.Update(category);
                 }
                 _unitOfWork.Save();
-                return RedirectToAction(nameof(Index));
+                return  RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
         #region API Calls
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var allObj = _unitOfWork.Category.GetAll();
+            var allObj = await _unitOfWork.Category.GetAllAsync();
             return Json(new { data = allObj });
         }
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var objFromDb = _unitOfWork.Category.Get(id);
+            var objFromDb = _unitOfWork.Category.GetAsync(id);
             if(objFromDb == null)
             {
                 return Json(new { success = false, message = "Error While Deleting" });
             }
-            _unitOfWork.Category.Remove(objFromDb);
+           await _unitOfWork.Category.RemoveAsync(id);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete Successful" });
         }
