@@ -68,6 +68,7 @@ namespace BulkyBook
 
             });
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.Configure<TwilioSetting>(Configuration.GetSection("Twilio"));
 
         }
 
