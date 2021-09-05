@@ -1,14 +1,25 @@
-﻿var dataTable;
+﻿
+var dataTable;
 $(document).ready(function () {
     loadDataTables();
 });
 
 function loadDataTables() {
     dataTable = $('#tblData').DataTable({
+       
+        
         "ajax": {
-            "url":"/Admin/User/GetAll"
+            "url": "/Admin/User/PostRows",
+            "type": "POST",
+            "datatype":"json"
         },
-        "columns": [
+        "serverSide": true,
+        "order": [0, "asc"],
+        "processing": true,
+        "language": {
+            "processing":"processing..."
+        },
+        "aoColumns": [
             { "data": "name", "width": "15%" },
             { "data": "email", "width": "15%" },
             { "data": "phoneNumber", "width": "15%" },
@@ -46,7 +57,6 @@ function loadDataTables() {
         ],
     });
 }
-
 function LockUnlock(id) {
     
             $.ajax({

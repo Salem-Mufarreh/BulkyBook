@@ -21,5 +21,7 @@ namespace BulkyBook.DataAccess.Data
         public DbSet<OrderHeader> OrderHeaders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<LoggedInUser> LoggedInUsers { get; set; }
+
     }
 }

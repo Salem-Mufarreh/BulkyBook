@@ -23,6 +23,7 @@ namespace BulkyBook.DataAccess.Repository
             ShoppingCart = new ShoppingCartRepository(_db);
             OrderDetails = new OrderDetailsRepository(_db);
             OrderHeader = new OrderHeaderRepository(_db);
+            loggedUsers = new LoggedUsersRepository(_db);
             
         }
         public ICategoryRepository Category { get; private set; }
@@ -34,6 +35,9 @@ namespace BulkyBook.DataAccess.Repository
         public IShoppingCartRepository ShoppingCart { get; private set; }
         public IOrderHeaderRepository OrderHeader { get; private set; }
         public IOrderDetailsRepository OrderDetails { get; private set; }
+
+        public ILoggedUsersRepository loggedUsers { get; private set; }
+
         public void Dispose()
         {
             _db.Dispose();

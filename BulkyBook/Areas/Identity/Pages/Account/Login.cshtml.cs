@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using BulkyBook.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using BulkyBook.Utility;
+using BulkyBook.Models;
 
 namespace BulkyBook.Areas.Identity.Pages.Account
 {
@@ -98,10 +99,28 @@ namespace BulkyBook.Areas.Identity.Pages.Account
                     HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
 
                     _logger.LogInformation("User logged in.");
+                    LoggedInUser loggedInUser = new LoggedInUser
+                    {
+                        Email = Input.Email,
+                        DateLogged = DateTime.Now,
+                        Name = user.Name
+                    };
+                    _unitOfWork.loggedUsers.Add(loggedInUser);
+                    _unitOfWork.Save();
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
+                    var user = _unitOfWork.ApplicationUser.GetFirstOrDefault(u => u.Email == Input.Email);
+
+                    LoggedInUser loggedInUser = new LoggedInUser
+                    {
+                        Email = Input.Email,
+                        DateLogged = DateTime.Now,
+                        Name = user.Name
+                    };
+                    _unitOfWork.loggedUsers.Add(loggedInUser);
+                    _unitOfWork.Save();
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
                 if (result.IsLockedOut)

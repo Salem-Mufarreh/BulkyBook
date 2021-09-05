@@ -17,32 +17,33 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BulkyBook</a>
+                <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">BulkyBook</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="DashBoard" asp-action="Index">DashBoard</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">
                                 @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                 {
-                                   <span>Manage Orders</span>
+                                    <span>Manage Orders</span>
                                 }
-            else
-            {
-                <span>
-                    Order History
-                </span>
-            }
-                                
+                                else
+                                {
+                                    <span>
+                                        Order History
+                                    </span>
+                                }
+
                             </a>
                         </li>
 
@@ -54,11 +55,14 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="CoverType" asp-action="index">Cover Type</a>
+
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="index">Product</a>
+
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="index">Company</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+
+
                                 </div>
                             </li>
                         }
@@ -72,12 +76,18 @@
 
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="index">Company</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="index">User's</a>
-                                    <div class="dropdown-divider"></div>
+
 
                                 </div>
                             </li>
                         }
+                        @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
+                        {
 
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="BrainTree" asp-action="Index">BrainTree</a>
+                            </li>
+                        }
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart) != null)
                         {
                             <li style="color:white;">
@@ -112,11 +122,12 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            <partial name="_Notifications" />
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-white-50 bg-primary">
+    <footer class="border-top footer text-white-50 bg-primary" id="foter">
         <div class="container">
             &copy; 2021 - BulkyBook
         </div>
