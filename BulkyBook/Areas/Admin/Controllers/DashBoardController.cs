@@ -1,5 +1,6 @@
 ﻿using BulkyBook.DataAccess.Repository;
 using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.Models;
 using BulkyBook.Models.ViewModels;
 using BulkyBook.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -44,12 +45,28 @@ namespace BulkyBook.Areas.Admin.Controllers
             dashBoardVM.Clients = list.Count();
             dashBoardVM.Sales = sales;
             dashBoardVM.loggedInUser = loggedUser;
-            dashBoardVM.orderHeader = _unitOfWork.OrderHeader.GetAll(includeProperties:"Product").ToList();
+            dashBoardVM.orderHeader = _unitOfWork.OrderHeader.GetAll().ToList();
             return View(dashBoardVM);
         }
 
 
-      
+        #region API CALL
+        [HttpGet]
+        public IActionResult GetData()
+        {
+            var data = _unitOfWork.OrderHeader.GetAll().GroupBy(a => new { a.OrderDate.Month})
+                .Select(g => new { OrderDate = g.Key, total = g.Sum(a => a.OrderTotal) }).ToList();
+            List<double> total = new List<double>();
+            List<int> month = new List<int>();
+            foreach(var item in data)
+            {
+                total.Add(item.total);
+                month.Add(item.OrderDate.Month);
+            }
+
+            return Json(new { date=month, amount=total });
+        }
+        #endregion
 
     }
 

@@ -708,6 +708,7 @@ progress {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
   display: flex;
+  justify-content:space-evenly;
   flex-wrap: wrap;
   margin-top: calc(var(--bs-gutter-y) * -1);
   margin-right: calc(var(--bs-gutter-x) * -.5);
@@ -4685,14 +4686,7 @@ fieldset:disabled .btn {
   display: block;
 }
 
-.dropdown-header {
-  display: block;
-  padding: 0.5rem 1rem;
-  margin-bottom: 0;
-  font-size: 0.875rem;
-  color: #6c757d;
-  white-space: nowrap;
-}
+
 
 .dropdown-item-text {
   display: block;
@@ -4736,7 +4730,6 @@ fieldset:disabled .btn {
 }
 
 .dropdown-menu-dark .dropdown-header {
-  color: #adb5bd;
 }
 
 .btn-group,
@@ -9863,7 +9856,7 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #cb0c9f !important;
+  background-color: #cb0c9f ;
 }
 
 .bg-secondary {
