@@ -5294,8 +5294,13 @@ fieldset:disabled .btn {
   color: rgba(52, 71, 103, 0.9);
 }
 
-.navbar-dark .navbar-brand {
-  color: #fff;
+#titleBulky {
+    padding-top: 0.40625rem;
+    padding-bottom: 0.40625rem;
+    margin-right: 1rem;
+    font-size: 1.125rem;
+    white-space: nowrap;
+    color:white;
 }
 
 .navbar-dark .navbar-brand:hover,
@@ -19557,16 +19562,7 @@ fieldset:disabled .btn {
     cursor: pointer;
   }
 
-  .dropdown .dropdown-toggle:after,
-  .dropup .dropdown-toggle:after,
-  .dropstart .dropdown-toggle:after,
-  .dropend .dropdown-toggle:after {
-    content: "\f107";
-    font: normal normal normal 14px/1 FontAwesome;
-    border: none;
-    vertical-align: middle;
-    font-weight: 600;
-  }
+  
 
   .dropdown .dropdown-toggle.show:after,
   .dropup .dropdown-toggle.show:after,
