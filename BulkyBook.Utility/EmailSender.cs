@@ -24,8 +24,8 @@ namespace BulkyBook.Utility
 
         private Task Execute(string sendGridKey, string subject, string message, string email)
         {
-            var client = new SendGridClient("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");
-            var from = new EmailAddress("salemmuf9@gmail.com", "BulkyBooks");
+            var client = new SendGridClient("sendGrid client id");
+            var from = new EmailAddress("your email address", "BulkyBooks");
             var to = new EmailAddress(email,"End User");
             //var plainTextContent = "and easy to do anywhere, even with C#";
             //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
